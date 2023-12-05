@@ -10,6 +10,7 @@
     <modules>
         <module>ChickSite-blog</module>
         <module>ChickSite-im</module>
+        <module>ChickSite-tools</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -75,14 +76,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-security</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
             </dependency>
         </dependencies>
     </dependencyManagement>
