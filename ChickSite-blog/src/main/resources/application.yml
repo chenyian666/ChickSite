@@ -1,0 +1,41 @@
+spring:
+  # 运行环境
+  profiles:
+    active: dev
+  # 端口号
+  server:
+    port: 8080
+  # 数据库配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${chick-site.mysql.ip}:${chick-site.mysql.port}/${chick-site.mysql.db}?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: ${chick-site.mysql.username}
+    password: ${chick-site.mysql.password}
+    hikari:
+      # 连接池最小空闲时间
+      minimum-idle: 3
+      # 连接池最大连接数
+      maximum-pool-size: 10
+      # 连接池最大活跃时间
+      max-lifetime: 30000   #不能小于30秒，否则默认回到1800秒
+      connection-test-query: SELECT 1
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: org.yian.chicksiteblog.entity
+  configuration:
+    # 下划线转驼峰
+    map-underscore-to-camel-case: true
+    # 枚举处理(使用枚举的序号来转换，数据库使用数值类型存储)
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+    # 日志打印
+    log-impl: ${chick-site.mybatis-plus.log-impl}
+    # 自动映射未知列时打印相关警告
+    auto-mapping-unknown-column-behavior: warning
+  global-config:
+    db-config:
+      id-type: none # “智能”模式，基于 IdTypeEnvironmentPostProcessor + 数据源的类型，自动适配成 AUTO、INPUT 模式。
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+
