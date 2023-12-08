@@ -12,8 +12,9 @@ import org.yian.common.CommonResult;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-    @GetMapping(value = "/login")
-    public CommonResult login(String username, String password) {
-        return CommonResult.successNoData("登录成功");
-    }
+/*    @GetMapping(value = "/login")
+    public String login(String username, String password) {
+        return "登陆成功！";
+    }*/
+
 }

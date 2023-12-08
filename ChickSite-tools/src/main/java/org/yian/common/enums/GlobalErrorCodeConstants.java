@@ -1,6 +1,6 @@
 package org.yian.common.enums;
 
-import org.yian.common.CommonErrorCode;
+import org.yian.common.exception.CommonErrorCode;
 
 /**
  * 全局错误码枚举

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.util.Assert;
 import org.yian.common.enums.GlobalErrorCodeConstants;
+import org.yian.common.exception.CommonErrorCode;
+import org.yian.common.exception.ServerException;
+import org.yian.common.exception.ServiceException;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -107,7 +110,7 @@ public class CommonResult<T> implements Serializable {
         return Objects.equals(code, GlobalErrorCodeConstants.SUCCESS.getCode());
     }
 
-    public static <T> CommonResult<T> error(ServiceException serviceException,String detailedMsg) {
+    public static <T> CommonResult<T> error(ServiceException serviceException, String detailedMsg) {
         return error(serviceException.getCode(), serviceException.getMessage(),detailedMsg);
     }
 

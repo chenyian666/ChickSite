@@ -1,4 +1,4 @@
-package org.yian.common;
+package org.yian.common.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

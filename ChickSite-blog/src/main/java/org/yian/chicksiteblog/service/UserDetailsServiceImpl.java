@@ -1,7 +1,6 @@
 package org.yian.chicksiteblog.service;
 
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,8 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.yian.chicksiteblog.dao.UserMapper;
-import org.yian.chicksiteblog.entity.UserDO;
+import org.yian.chicksiteblog.dao.SysUserMapper;
 
 /**
  * UserDetailsService实现类
@@ -23,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private PasswordEncoder passwordEncoder;
     @Resource
-    private UserMapper userMapper;
+    private SysUserMapper userMapper;
 
     /**
      * 根据用户名查询用户信息
@@ -34,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        UserDO userDO = userMapper.selectByUsername(username);
+//        SysUserDO userDO = userMapper.selectByUsername(username);
 //        if (userDO == null) {
 //            throw new UsernameNotFoundException("用户名不存在");
 //        }
@@ -44,6 +42,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        String password = userDO.getPassword();
 //        passwordEncoder.matches(password,"123" );
         String password = passwordEncoder.encode("123");
-        return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        System.out.println(password);
+        return new User(username, password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin,member,normal,ROLE_admin"));
     }
 }
