@@ -38,15 +38,6 @@ public final class ServerException extends RuntimeException {
         this.message = message;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public ServerException setCode(Integer code) {
-        this.code = code;
-        return this;
-    }
-
     @Override
     public String getMessage() {
         return message;

@@ -1,25 +1,15 @@
 package org.yian.chicksiteblog.handler;
 
-import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
-import org.springframework.security.web.savedrequest.RequestCache;
-import org.springframework.security.web.savedrequest.SavedRequest;
-import org.springframework.security.web.util.UrlUtils;
-import org.springframework.util.Assert;
-import org.yian.common.enums.UserRoleEnum;
 
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Locale;
+
 public class AuthzSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Override

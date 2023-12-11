@@ -38,14 +38,6 @@ public final class ServiceException extends RuntimeException {
         this.message = message;
     }
 
-    public Integer getCode() {
-        return code;
-    }
-
-    public ServiceException setCode(Integer code) {
-        this.code = code;
-        return this;
-    }
 
     @Override
     public String getMessage() {

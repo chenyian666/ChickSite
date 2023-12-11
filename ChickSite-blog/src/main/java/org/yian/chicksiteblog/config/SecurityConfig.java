@@ -2,9 +2,9 @@ package org.yian.chicksiteblog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Role;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,9 +19,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
  * author chenyian
  */
 @Configuration
-public class SecurityConfig{
+public class SecurityConfig {
     /**
      * 创建密码编译器实例
+     *
      * @return 密码编译器
      */
     @Bean
@@ -31,6 +32,7 @@ public class SecurityConfig{
 
     /**
      * 安全过滤器链
+     *
      * @param httpSecurity http安全配置
      * @return 安全过滤器链
      * @throws Exception 异常
@@ -38,7 +40,7 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         // 关闭csrf
-        httpSecurity.csrf(csrf -> csrf.disable());
+        httpSecurity.csrf(AbstractHttpConfigurer::disable);
         // 授权配置
         httpSecurity.authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login.html").permitAll()
@@ -63,6 +65,7 @@ public class SecurityConfig{
 
     /**
      * 忽略静态资源和页面
+     *
      * @return 忽略静态资源
      */
     @Bean
