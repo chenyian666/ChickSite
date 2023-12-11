@@ -45,6 +45,7 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login.html").permitAll()
                         .requestMatchers("/main.html").hasRole(UserRoleEnum.ADMIN.getName())
+                        .requestMatchers("/error.html").hasRole("error")
                         // 所有请求都需要认证
                         .anyRequest().authenticated())
                 // 表单登录
@@ -57,8 +58,16 @@ public class SecurityConfig {
                                 // 自定义登录成功处理器
                                 .successHandler(new AuthzSuccessHandler())
                 )
+                // 记住我
+                .rememberMe(rememberMe -> rememberMe.key("chicksiteblog").tokenValiditySeconds(60 * 60 * 24 * 7))
                 // 注销
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login.html"))
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        // 自定义权限拒绝处理器
+                       .accessDeniedHandler(new org.yian.chicksiteblog.handler.PermissionDeniedHandler())
+                        // 自定义未授权处理器
+//                       .authenticationEntryPoint(new org.yian.chicksiteblog.handler.AuthenticationEntryPoint())
+                )
                 .httpBasic(withDefaults());
         return httpSecurity.build();
     }
