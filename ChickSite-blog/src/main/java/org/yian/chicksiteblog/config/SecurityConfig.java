@@ -41,6 +41,7 @@ public class SecurityConfig{
         httpSecurity.csrf(csrf -> csrf.disable());
         // 授权配置
         httpSecurity.authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/login.html").permitAll()
                         .requestMatchers("/main.html").hasRole(UserRoleEnum.ADMIN.getName())
                         // 所有请求都需要认证
                         .anyRequest().authenticated())
@@ -48,10 +49,11 @@ public class SecurityConfig{
                 .formLogin((formLogin) ->
                         formLogin
                                 // 自定义登录页面
-                                .loginPage("/login.html").permitAll()
+                                .loginPage("/login.html")
                                 .loginProcessingUrl("/user/login")
+                                .defaultSuccessUrl("/main.html")
                                 // 自定义登录成功处理器
-                                .successHandler(new AuthzSuccessHandler("https://baidu.com"))
+                                .successHandler(new AuthzSuccessHandler())
                 )
                 // 注销
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login.html"))

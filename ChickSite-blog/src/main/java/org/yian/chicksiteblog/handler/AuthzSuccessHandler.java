@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -19,15 +20,8 @@ import org.yian.common.enums.UserRoleEnum;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Locale;
-public class AuthzSuccessHandler implements AuthenticationSuccessHandler {
-    private String targetUrl;
-    private RequestCache requestCache = new HttpSessionRequestCache();
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+public class AuthzSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-    public AuthzSuccessHandler(String targetUrl) {
-        Assert.isTrue(UrlUtils.isValidRedirectUrl(targetUrl), "targetUrl must start with '/' or with 'http(s)'");
-        this.targetUrl = targetUrl;
-    }
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // todo 权限验证成功后处理逻辑
@@ -46,28 +40,8 @@ public class AuthzSuccessHandler implements AuthenticationSuccessHandler {
             System.out.println("locales:" + locales.nextElement());
         }
 
+        super.onAuthenticationSuccess(request, response, authentication);
 
-        SavedRequest savedRequest = this.requestCache.getRequest(request, response);
-        if (savedRequest == null) {
-            // 未找到目标 URL，重定向到默认 URL
-            targetUrl = "https://bing.com";
-        }else {
-            // 重定向到之前的目标 URL
-            targetUrl = savedRequest.getRedirectUrl();
-        }
-        // 去除尾部的?continue
-//        if (targetUrl.contains("?continue")) {
-//            targetUrl = targetUrl.substring(0, targetUrl.indexOf("?continue"));
-//        }
-        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-        response.sendRedirect(targetUrl);
     }
 
-    public void setRequestCache(RequestCache requestCache) {
-        this.requestCache = requestCache;
-    }
-
-    protected RedirectStrategy getRedirectStrategy() {
-        return this.redirectStrategy;
-    }
 }
