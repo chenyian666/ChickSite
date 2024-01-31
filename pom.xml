@@ -33,6 +33,7 @@
         <mybatis-plus-generator.version>3.5.4.1</mybatis-plus-generator.version>
         <mysql-connector.version>8.0.30</mysql-connector.version>
         <druid.version>1.2.15</druid.version>
+        <redisson.version>3.25.0</redisson.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -89,6 +90,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+            <!-- redis-->
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

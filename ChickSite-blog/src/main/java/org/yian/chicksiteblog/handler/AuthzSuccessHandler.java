@@ -5,11 +5,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Locale;
-
+@Component
 public class AuthzSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     @Override

@@ -5,6 +5,17 @@ spring:
   # 端口号
   server:
     port: 8080
+  # redis配置
+  data:
+    redis:
+      # 数据库索引
+      database: 0
+      host: ${chick-site.redis.host}
+      port: ${chick-site.redis.port}
+      password: ${chick-site.redis.password}
+      # 连接超时
+      timeout: 10000
+
   # 数据库配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -37,5 +48,7 @@ mybatis-plus:
       id-type: none # “智能”模式，基于 IdTypeEnvironmentPostProcessor + 数据源的类型，自动适配成 AUTO、INPUT 模式。
       logic-delete-value: 1
       logic-not-delete-value: 0
+
+
 
 

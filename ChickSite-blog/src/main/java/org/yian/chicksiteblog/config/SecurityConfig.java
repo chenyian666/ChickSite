@@ -1,5 +1,6 @@
 package org.yian.chicksiteblog.config;
 
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.yian.chicksiteblog.handler.AuthzSuccessHandler;
+import org.yian.chicksiteblog.handler.PermissionDeniedHandler;
+import org.yian.chicksiteblog.service.UserDetailsServiceImpl;
 import org.yian.common.enums.UserRoleEnum;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -20,6 +23,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
  */
 @Configuration
 public class SecurityConfig {
+    @Resource
+    private AuthzSuccessHandler authzSuccessHandler;
+    @Resource
+    private PermissionDeniedHandler permissionDeniedHandler;
     /**
      * 创建密码编译器实例
      *
@@ -56,15 +63,17 @@ public class SecurityConfig {
                                 .loginProcessingUrl("/user/login")
                                 .defaultSuccessUrl("/main.html")
                                 // 自定义登录成功处理器
-                                .successHandler(new AuthzSuccessHandler())
+                                .successHandler(authzSuccessHandler)
                 )
                 // 记住我
-                .rememberMe(rememberMe -> rememberMe.key("chicksiteblog").tokenValiditySeconds(60 * 60 * 24 * 7))
+                .rememberMe(rememberMe -> rememberMe
+                        .key("chicksiteblog")
+                        .tokenValiditySeconds(60 * 60 * 24 * 7))
                 // 注销
-                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("/login.html"))
+                .logout(logout -> logout.logoutUrl("/user/logout").logoutSuccessUrl("/login.html"))
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         // 自定义权限拒绝处理器
-                       .accessDeniedHandler(new org.yian.chicksiteblog.handler.PermissionDeniedHandler())
+                       .accessDeniedHandler(permissionDeniedHandler)
                         // 自定义未授权处理器
 //                       .authenticationEntryPoint(new org.yian.chicksiteblog.handler.AuthenticationEntryPoint())
                 )
