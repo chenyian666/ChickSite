@@ -1,9 +1,16 @@
 package org.yian.communication;
 
+import java.awt.*;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
+import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Scanner;
 
 public class TcpClient {
     public static void main(String[] args) throws IOException {
@@ -14,7 +21,18 @@ public class TcpClient {
             // 把低级的字节输出流包装成数据输出流
             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
             // 开始写数据出去
-            dataOutputStream.write("在一起好嘛？".getBytes());
+            Scanner scanner = new Scanner(System.in);
+            while (true) {
+                System.out.println("请发送:");
+                String next = scanner.nextLine();
+                if (next.equals("exit")) {
+                    break;
+                }
+                Instant sendTime = Instant.now();
+                System.out.println("消息发送时间戳：" + sendTime);
+                dataOutputStream.writeUTF(next+","+sendTime);
+                dataOutputStream.flush();
+            }
             dataOutputStream.close();
         }
     }

@@ -7,7 +7,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Scanner;
 
 @SpringBootTest
 class ChickSiteBlogApplicationTests {
@@ -33,5 +36,27 @@ class ChickSiteBlogApplicationTests {
         System.out.println(address.getHostAddress());
     }
 
+    @Test
+    void test() {
+        // 记录消息发送时间戳
+        Instant sendTime = Instant.now();
+        System.out.println("消息发送时间戳：" + sendTime);
+
+        // 模拟消息传输过程
+        try {
+            // 等待一段时间表示消息传输过程
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // 记录消息接收时间戳
+        Instant receiveTime = Instant.now();
+        System.out.println("消息接收时间戳：" + receiveTime);
+
+        // 计算消息延迟时间
+        long delay = ChronoUnit.MILLIS.between(sendTime, receiveTime);
+        System.out.println("消息延迟时间：" + delay + "毫秒");
+    }
 
 }
